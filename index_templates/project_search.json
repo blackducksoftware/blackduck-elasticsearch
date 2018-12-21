@@ -1,0 +1,92 @@
+{
+    "index_patterns": ["search*"],
+    "settings": {
+      "index.max_ngram_diff": 5,
+      "analysis": {
+        "analyzer": {
+          "ngram_analyzer": {
+            "tokenizer": "ngram_tokenizer",
+            "filter": [
+              "lowercase"
+            ]     
+          },
+          "edge_ngram_analyzer": {
+            "tokenizer": "edge_ngram_tokenizer",
+            "filter": [
+              "lowercase"
+            ]     
+          }           
+        },
+        "tokenizer": {
+          "ngram_tokenizer": {
+            "type": "ngram",
+            "min_gram": 1,
+            "max_gram": 4,
+            "token_chars": [
+              "letter",
+              "digit",
+              "symbol",
+              "whitespace",
+              "punctuation"
+            ]
+          },
+          "edge_ngram_tokenizer": {
+            "type": "edge_ngram",
+            "min_gram": 1,
+            "max_gram": 4,
+            "token_chars": [
+              "letter",
+              "digit",
+              "symbol",
+              "whitespace",
+              "punctuation"
+            ]
+          }
+        }
+      }
+    },
+    "mappings": {
+      "doc": {
+        "properties": {
+          "name": {
+            "type":"text",
+            "fields": {
+              "ngram": { 
+                "type":  "text",
+                "analyzer":"ngram_analyzer"
+              },
+              "edge_ngram": { 
+                "type":  "text",
+                "analyzer":"edge_ngram_analyzer"
+              }                        
+            }          
+          },      
+          "description": {
+            "type":"text"
+          },
+          "ownership": {
+            "type": "byte"
+          },
+          "tags":{
+            "type": "keyword"
+          },
+          "entity_type":{
+            "type": "keyword"
+          },
+          "doc_type": {
+            "type": "byte",
+            "index": false
+          },
+          "id": {
+            "type": "keyword",
+            "index": false
+          },        
+          "uuid": {
+            "type": "keyword",
+            "index": false
+          }
+        }
+      }
+    },
+    "aliases": {}
+  }

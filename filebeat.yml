@@ -1,0 +1,20 @@
+filebeat.prospectors:
+- input_type: log
+  paths:
+    - ${HUB_APPLICATION_HOME}/logs/*.log
+  fields:
+    application: "hub-elasticsearch"
+    category: "elasticsearch-log"
+  fields_under_root: true
+- input_type: log
+  paths:
+  - /usr/share/elasticsearch/logs/gc.log*
+  fields:
+    application: "hub-elasticsearch"
+    category: "gc-log"
+  fields_under_root: true
+output.logstash:
+  hosts: ["${HUB_LOGSTASH_HOST:logstash}:${HUB_LOGSTASH_PORT:5044}"]
+  index: filebeat
+
+logging.level: info
